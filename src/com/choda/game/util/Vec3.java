@@ -53,7 +53,12 @@ public class Vec3 {
         return Math.sqrt(this.dot(this));
     }
     public Vec3 normalize() {
-        return this.dot(1 / norm());
+        double norm = norm();
+        if (norm == 0) {
+            return this;
+        } else {
+            return this.dot(1 / norm());
+        }
     }
     public double[] toArray() {
         return new double[] { x, y, z };

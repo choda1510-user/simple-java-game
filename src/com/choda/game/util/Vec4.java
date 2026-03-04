@@ -54,7 +54,12 @@ public class Vec4 {
         return Math.sqrt(this.dot(this));
     }
     public Vec4 normalize() {
-        return this.dot(1 / norm());
+        double norm = norm();
+        if (norm == 0) {
+            return this;
+        } else {
+            return this.dot(1 / norm());
+        }
     }
     public Vec4 w() {
         return new Vec4(x / w, y / w, z / w, 1.0);
