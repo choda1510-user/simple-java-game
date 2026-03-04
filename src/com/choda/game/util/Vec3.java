@@ -36,8 +36,8 @@ public class Vec3 {
     public Vec3 sub(Vec3 v) {
         return new Vec3(x - v.x, y - v.y, z - v.z);
     }
-    public Vec3 dot(double scala) {
-        return new Vec3(x * scala, y * scala, z * scala);
+    public Vec3 dot(double scalar) {
+        return new Vec3(x * scalar, y * scalar, z * scalar);
     }
     public double dot(Vec3 v) {
         return x * v.x + y * v.y + z * v.z;
