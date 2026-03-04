@@ -21,13 +21,13 @@ public class RenderPanel extends JPanel {
         BufferedImage blankCursorImage = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankCursorImage, new Point(0, 0), "Blank Cursor");
         setPreferredSize(new Dimension(800, 600));
-        setCursor(blankCursor);
     }
     public RenderPanel(BufferedImage bufferedImage, Game game, Render render) {
         this();
         this.bufferedImage = bufferedImage;
         this.game = game;
         this.render = render;
+        setCursorVisible(game.isInputMode());
     }
     @Override
     public void paintComponent(Graphics g) {

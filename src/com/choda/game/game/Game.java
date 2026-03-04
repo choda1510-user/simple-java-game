@@ -19,7 +19,7 @@ public class Game implements ActionListener {
     private Player player;
     private Shape floor;
     private boolean[] wasdeq;
-    boolean inputMode;
+    boolean inputMode = true;
     private Instant prevTime;
     private JFrame frame;
     private RenderPanel renderPanel;
@@ -93,39 +93,41 @@ public class Game implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Instant now = Instant.now();
         long deltaTime = now.minusMillis(prevTime.toEpochMilli()).toEpochMilli();
+        if (deltaTime == 0) {
+            deltaTime = 1;
+        }
         prevTime = now;
         player.getCamera().setProject(45 * Math.PI / 180.0, (double)frame.getHeight() / (double)frame.getWidth(), 0.1, 100.0);
 
-
-//        Vec3 playerFront = player.getFront();
-//        Vec3 playerMove = new Vec3();
-//        if (wasdeq[0]) {
-//            playerMove.add(playerFront);
-//        }
-//        if (wasdeq[1]) {
-//            playerMove.add(new Vec3(0.0, 1.0, 0.0).cross(playerFront));
-//        }
-//        if (wasdeq[2]) {
-//            playerMove.add(playerFront.dot(-1));
-//        }
-//        if (wasdeq[3]) {
-//            playerMove.add(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(-1));
-//        }
-//        player.move(playerMove.normalize().dot(deltaTime / 30.0 * player.getSpeed()));
-
         Vec3 playerFront = player.getFront();
+        Vec3 playerMove = new Vec3();
         if (wasdeq[0]) {
-            player.move(playerFront.dot(deltaTime / 30.0 * player.getSpeed()));
+            playerMove = playerMove.add(playerFront);
         }
         if (wasdeq[1]) {
-            player.move(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(deltaTime / 30.0 * player.getSpeed()));
+            playerMove = playerMove.add(new Vec3(0.0, 1.0, 0.0).cross(playerFront));
         }
         if (wasdeq[2]) {
-            player.move(playerFront.dot(deltaTime / 30.0 * player.getSpeed()).dot(-1));
+            playerMove = playerMove.add(playerFront.dot(-1));
         }
         if (wasdeq[3]) {
-            player.move(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(deltaTime / 30.0 * player.getSpeed()).dot(-1));
+            playerMove = playerMove.add(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(-1));
         }
+        player.move(playerMove.normalize().dot(deltaTime / 30.0 * player.getSpeed()));
+
+//        Vec3 playerFront = player.getFront();
+//        if (wasdeq[0]) {
+//            player.move(playerFront.dot(deltaTime / 30.0 * player.getSpeed()));
+//        }
+//        if (wasdeq[1]) {
+//            player.move(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(deltaTime / 30.0 * player.getSpeed()));
+//        }
+//        if (wasdeq[2]) {
+//            player.move(playerFront.dot(deltaTime / 30.0 * player.getSpeed()).dot(-1));
+//        }
+//        if (wasdeq[3]) {
+//            player.move(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(deltaTime / 30.0 * player.getSpeed()).dot(-1));
+//        }
 
 
         render.setWidth(renderPanel.getWidth());
@@ -135,4 +137,9 @@ public class Game implements ActionListener {
         renderPanel.setColorBuffer(render.getColorBuffer());
         renderPanel.repaint();
     }
+
+    public boolean isInputMode() {
+        return inputMode;
+    }
+
 }

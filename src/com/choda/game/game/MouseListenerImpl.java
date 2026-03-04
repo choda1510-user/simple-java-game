@@ -11,7 +11,7 @@ public class MouseListenerImpl extends MouseAdapter {
     private JFrame frame;
     private int lastX, lastY;
     private final double sensitivity = 0.1;
-    private double yaw = -90.0f, pitch;
+    private double yaw = -90.0, pitch;
     private Camera camera;
     private Game game;
     private Robot robot;

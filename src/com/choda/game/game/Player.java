@@ -77,9 +77,5 @@ public class Player {
     public void move(Vec3 vec3) {
         position = new Vec3(Mat4.makeTranslation(vec3).dot(new Vec4(position)));
     }
-    public void rotate(double radian, Vec3 axis) {
-        front = new Vec3(Mat4.makeRotation(radian, axis).dot(new Vec4(front))).normalize();
-        camera.setFront(front);
-    }
 
 }
