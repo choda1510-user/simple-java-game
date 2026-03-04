@@ -43,7 +43,7 @@ public class Player {
     }
 
     public Camera getCamera() {
-        camera.setPosition(position);
+        camera.setPosition(position.add(new Vec3(0.0, 2.0, 0.0)));
         return camera;
     }
 

@@ -28,18 +28,18 @@ public class Game implements ActionListener {
         prevTime = Instant.now();
         wasdeq = new boolean[6];
         ArrayList<Triangle> floorPolygon = new ArrayList<>();
-//        floorPolygon.add(new Triangle(
-//                new Vec3(-10, 0, 10),
-//                new Vec3(10, 0, -10),
-//                new Vec3(10, 0, 10),
-//                new Color(0x00FFFFFF)
-//        ));
-//        floorPolygon.add(new Triangle(
-//                new Vec3(-10, 0, 10),
-//                new Vec3(-10, 0, -10),
-//                new Vec3(10, 0, -10),
-//                new Color(0x00FFFFFF)
-//        ));
+        floorPolygon.add(new Triangle(
+                new Vec3(-10, 0, 10),
+                new Vec3(10, 0, -10),
+                new Vec3(10, 0, 10),
+                new Color(0x00DDDDDD)
+        ));
+        floorPolygon.add(new Triangle(
+                new Vec3(-10, 0, 10),
+                new Vec3(-10, 0, -10),
+                new Vec3(10, 0, -10),
+                new Color(0x00DDDDDD)
+        ));
         floorPolygon.add(new Triangle(
                 new Vec3(-1, 0, 0),
                 new Vec3(1, 0, 0),
