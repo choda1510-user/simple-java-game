@@ -157,7 +157,7 @@ public class Mat4 {
     }
     public static Mat4 makeLookAt(Vec3 position, Vec3 target, Vec3 up) {
         Mat4 leftMat4 = makeIdentity(), rightMat4 = makeIdentity();
-        Vec3 direction = target.sub(position).normalize();
+        Vec3 direction = position.sub(target).normalize();
         Vec3 right = up.cross(direction).normalize();
         Vec3 cameraUp = direction.cross(right).normalize();
         leftMat4.m[0][0] = right.x;
