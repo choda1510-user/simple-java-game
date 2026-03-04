@@ -3,7 +3,9 @@ package com.choda.game.util;
 public class Vec3 {
     public double x, y, z;
     public Vec3() {
-
+        x = 0;
+        y = 0;
+        z = 0;
     }
     public Vec3(double value) {
         this.x = value;

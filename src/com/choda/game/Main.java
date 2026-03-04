@@ -15,10 +15,12 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("simple game");
             Camera camera = new Camera();
+            Player player = new Player(1, 0.1);
+            player.setCamera(camera);
             camera.setProject(45 * Math.PI / 180.0, (double)frame.getHeight() / (double)frame.getWidth(), 0.1, 100.0);
-            camera.setPosition(new Vec3(0.0, 0.0, 3.1));
+            player.move(new Vec3(0.0, 0.0, 3.1));
             Game game = new Game();
-            game.setCamera(camera);
+            game.setPlayer(player);
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             Render render = new Render(toolkit.getScreenSize().width, toolkit.getScreenSize().height);
             RenderPanel renderPanel = new RenderPanel(new BufferedImage(toolkit.getScreenSize().width, toolkit.getScreenSize().height, BufferedImage.TYPE_INT_RGB), game, render);
@@ -28,11 +30,11 @@ public class Main {
             renderPanel.addKeyListener(keyboardListener);
             renderPanel.addMouseListener(mouseListener);
             renderPanel.addMouseMotionListener(mouseListener);
+            game.setFrame(frame);
+            game.setRender(render);
+            game.setRenderPanel(renderPanel);
 
-            Timer timer = new Timer(1000 / 30, (e) -> {
-                camera.setProject(45 * Math.PI / 180.0, (double)frame.getHeight() / (double)frame.getWidth(), 0.1, 100.0);
-                renderPanel.repaint();
-            });
+            Timer timer = new Timer(1000 / 30, game);
             timer.start();
 
             frame.setSize(800, 600);

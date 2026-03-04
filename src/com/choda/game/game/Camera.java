@@ -30,4 +30,16 @@ public class Camera {
     public void setFront(Vec3 front) {
         this.front = front != null ? front.normalize() : this.front;
     }
+    public Vec3 getPosition() {
+        return position;
+    }
+
+    public Vec3 getFront() {
+        return front;
+    }
+
+    public Vec3 getUp() {
+        return up;
+    }
+
 }
