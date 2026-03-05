@@ -1,7 +1,7 @@
 package com.choda.game.screen;
 
 import com.choda.game.game.Game;
-import com.choda.game.game.Render;
+import com.choda.game.game.Renderer;
 import com.choda.game.util.Mat4;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ public class RenderPanel extends JPanel {
     private Cursor defaultCursor;
     private Cursor blankCursor;
     private Game game;
-    private Render render;
+    private Renderer renderer;
     public RenderPanel() {
         super();
         setFocusable(true);
@@ -22,21 +22,21 @@ public class RenderPanel extends JPanel {
         blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankCursorImage, new Point(0, 0), "Blank Cursor");
         setPreferredSize(new Dimension(800, 600));
     }
-    public RenderPanel(BufferedImage bufferedImage, Game game, Render render) {
+    public RenderPanel(BufferedImage bufferedImage, Game game, Renderer renderer) {
         this();
         this.bufferedImage = bufferedImage;
         this.game = game;
-        this.render = render;
+        this.renderer = renderer;
         setCursorVisible(game.isInputMode());
     }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        render.setWidth(getWidth());
-        render.setHeight(getHeight());
-        render.setViewport(getViewport());
-        render.render(game);
-        setColorBuffer(render.getColorBuffer());
+        renderer.setWidth(getWidth());
+        renderer.setHeight(getHeight());
+        renderer.setViewport(getViewport());
+        renderer.render(game);
+        setColorBuffer(renderer.getColorBuffer());
         g.drawImage(bufferedImage, 0, 0, this);
     }
     public void setBufferedImage(BufferedImage bufferedImage) {

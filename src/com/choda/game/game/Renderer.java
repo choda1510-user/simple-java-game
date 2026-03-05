@@ -4,16 +4,17 @@ import com.choda.game.mesh.Shape;
 import com.choda.game.mesh.Triangle;
 import com.choda.game.util.Mat4;
 import com.choda.game.util.Vec3;
+import com.choda.game.util.Vec4;
 
 import java.awt.*;
 import java.util.List;
 
-public class Render {
+public class Renderer {
     private double[][] zBuffer;
     private int[][] colorBuffer;
     private int width, height;
     private Mat4 viewport;
-    public Render(int width, int height) {
+    public Renderer(int width, int height) {
         zBuffer = new double[width][height];
         colorBuffer = new int[width][height];
     }
@@ -32,14 +33,19 @@ public class Render {
         for (Shape shape : shapes) {
             for (Triangle triangle : shape.getTriangles()) {
                 Color color = triangle.getColor();
+                Vec4[] clip = triangle.dot(camera.getProject().dot(camera.getLookUp().dot(shape.getTransform())));
+                Triangle ndcTriangle = triangle.w(camera.getProject().dot(camera.getLookUp().dot(shape.getTransform())));
                 Triangle screenTriangle = triangle.w(camera.getProject().dot(camera.getLookUp().dot(shape.getTransform()))).mul(viewport);
                 if (betweenZ(screenTriangle.getP1().z, screenTriangle.getP2().z, screenTriangle.getP3().z)) {
                     Point min = getMinPoint(screenTriangle, width, height);
                     Point max = getMaxPoint(screenTriangle, width, height);
                     for (int i = min.x; i < max.x; i++) {
                         for (int j = min.y; j < max.y; j++) {
+                            Vec3 bcScreen = screenTriangle.barycentric(new Point(i, j));
+                            Vec3 bcClip = new Vec3(bcScreen.x / clip[0].w, bcScreen.y / clip[1].w, bcScreen.z / clip[2].w);
+                            bcClip = bcClip.dot(1/(bcClip.x + bcClip.y + bcClip.z));
                             if (screenTriangle.has(new Point(i, j))) {
-                                double z = getZ(screenTriangle, new Point(i, j));
+                                double z = bcScreen.dot(new Vec3(ndcTriangle.getP1().z, ndcTriangle.getP2().z, ndcTriangle.getP3().z));
                                 if (z < zBuffer[i][j]) {
                                     colorBuffer[i][j] = color.getRGB();
                                     zBuffer[i][j] = z;

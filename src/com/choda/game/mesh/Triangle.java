@@ -48,8 +48,19 @@ public class Triangle {
     public Triangle mul(Mat4 mat4) {
         return new Triangle(new Vec3(mat4.dot(new Vec4(p1))), new Vec3(mat4.dot(new Vec4(p2))), new Vec3(mat4.dot(new Vec4(p3))));
     }
+    public Vec4[] dot(Mat4 mat4) {
+        return new Vec4[] {
+                mat4.dot(new Vec4(p1)),
+                mat4.dot(new Vec4(p2)),
+                mat4.dot(new Vec4(p3))
+        };
+    }
     // https://nogabi.tistory.com/4
     public boolean has(Point p) {
+        Vec3 bcScreen = barycentric(p);
+        return !(bcScreen.x < 0) && !(bcScreen.y < 0) && !(bcScreen.z < 0);
+    }
+    public Vec3 barycentric(Point p) {
         Vec3 u = new Vec3(
                 p3.x - p1.x,
                 p2.x - p1.x,
@@ -65,7 +76,7 @@ public class Triangle {
         } else {
             bcScreen = new Vec3(1.0 - (u.x + u.y) / u.z, u.y / u.z, u.x / u.z);
         }
-        return !(bcScreen.x < 0) && !(bcScreen.y < 0) && !(bcScreen.z < 0);
+        return bcScreen;
     }
     public Vec3 getP1() {
         return new Vec3(p1);

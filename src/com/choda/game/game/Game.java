@@ -23,7 +23,7 @@ public class Game implements ActionListener {
     private Instant prevTime;
     private JFrame frame;
     private RenderPanel renderPanel;
-    private Render render;
+    private Renderer renderer;
     public Game() {
         prevTime = Instant.now();
         wasdeq = new boolean[6];
@@ -84,8 +84,8 @@ public class Game implements ActionListener {
         this.renderPanel = renderPanel;
     }
 
-    public void setRender(Render render) {
-        this.render = render;
+    public void setRender(Renderer renderer) {
+        this.renderer = renderer;
     }
 
 
@@ -130,11 +130,11 @@ public class Game implements ActionListener {
 //        }
 
 
-        render.setWidth(renderPanel.getWidth());
-        render.setHeight(renderPanel.getHeight());
-        render.setViewport(renderPanel.getViewport());
-        render.render(this);
-        renderPanel.setColorBuffer(render.getColorBuffer());
+        renderer.setWidth(renderPanel.getWidth());
+        renderer.setHeight(renderPanel.getHeight());
+        renderer.setViewport(renderPanel.getViewport());
+        renderer.render(this);
+        renderPanel.setColorBuffer(renderer.getColorBuffer());
         renderPanel.repaint();
     }
 

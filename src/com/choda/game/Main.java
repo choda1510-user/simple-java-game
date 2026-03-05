@@ -1,6 +1,7 @@
 package com.choda.game;
 
 import com.choda.game.game.*;
+import com.choda.game.game.Renderer;
 import com.choda.game.screen.RenderPanel;
 import com.choda.game.util.Vec3;
 
@@ -22,8 +23,8 @@ public class Main {
             Game game = new Game();
             game.setPlayer(player);
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Render render = new Render(toolkit.getScreenSize().width, toolkit.getScreenSize().height);
-            RenderPanel renderPanel = new RenderPanel(new BufferedImage(toolkit.getScreenSize().width, toolkit.getScreenSize().height, BufferedImage.TYPE_INT_RGB), game, render);
+            Renderer renderer = new Renderer(toolkit.getScreenSize().width, toolkit.getScreenSize().height);
+            RenderPanel renderPanel = new RenderPanel(new BufferedImage(toolkit.getScreenSize().width, toolkit.getScreenSize().height, BufferedImage.TYPE_INT_RGB), game, renderer);
             KeyboardListenerImpl keyboardListener = new KeyboardListenerImpl(game, renderPanel, game.getWasdeq());
             MouseListenerImpl mouseListener = new MouseListenerImpl(game.getCamera(), game);
             mouseListener.setFrame(frame);
@@ -31,7 +32,7 @@ public class Main {
             renderPanel.addMouseListener(mouseListener);
             renderPanel.addMouseMotionListener(mouseListener);
             game.setFrame(frame);
-            game.setRender(render);
+            game.setRender(renderer);
             game.setRenderPanel(renderPanel);
 
             Timer timer = new Timer(1000 / 30, game);
