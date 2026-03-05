@@ -18,6 +18,39 @@ public class Triangle {
     public Triangle() {
 
     }
+    public static class Builder {
+        private Vec3 p1, p2, p3;
+        private Color color;
+        private Builder() {
+
+        }
+        public Builder p1(double x, double y, double z) {
+            p1 = new Vec3(x, y, z);
+            return this;
+        }
+        public Builder p2(double x, double y, double z) {
+            p2 = new Vec3(x, y, z);
+            return this;
+        }
+        public Builder p3(double x, double y, double z) {
+            p3 = new Vec3(x, y, z);
+            return this;
+        }
+        public Builder color(Color color) {
+            this.color = color;
+            return this;
+        }
+        public Builder color(int color) {
+            this.color = new Color(color);
+            return this;
+        }
+        public Triangle build() {
+            return new Triangle(p1, p2, p3, color);
+        }
+    }
+    public static Builder builder() {
+        return new Builder();
+    }
     public Triangle(Vec3 p1, Vec3 p2, Vec3 p3) {
         if (p1 != null) {
             this.p1.x = p1.x;

@@ -28,18 +28,25 @@ public class Game implements ActionListener {
         prevTime = Instant.now();
         wasdeq = new boolean[6];
         ArrayList<Triangle> floorPolygon = new ArrayList<>();
-        floorPolygon.add(new Triangle(
-                new Vec3(-10, 0, 10),
-                new Vec3(10, 0, -10),
-                new Vec3(10, 0, 10),
-                new Color(0x00DDDDDD)
-        ));
-        floorPolygon.add(new Triangle(
-                new Vec3(-10, 0, 10),
-                new Vec3(-10, 0, -10),
-                new Vec3(10, 0, -10),
-                new Color(0x00DDDDDD)
-        ));
+        double size = 1;
+        int repeat = 6;
+        double pivot = repeat * size / 2;
+        for (int i = 0; i < repeat; i++) {
+            for (int j = 0; j < repeat; j++) {
+                floorPolygon.add(Triangle.builder()
+                        .p1(size * i - pivot, 0, size * j - pivot)
+                        .p2(size * (i + 1) - pivot, 0, size * (j + 1) - pivot)
+                        .p3(size * i - pivot, 0, size * (j + 1) - pivot)
+                        .color(0x00DDDDDD)
+                        .build());
+                floorPolygon.add(Triangle.builder()
+                        .p1(size * i - pivot, 0, size * j - pivot)
+                        .p2(size * (i + 1) - pivot, 0, size * j - pivot)
+                        .p3(size * (i + 1) - pivot, 0, size * (j + 1) - pivot)
+                        .color(0x00DDDDDD)
+                        .build());
+            }
+        }
         floorPolygon.add(new Triangle(
                 new Vec3(-1, 0, 0),
                 new Vec3(1, 0, 0),
