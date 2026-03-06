@@ -74,8 +74,30 @@ public class Player {
         }
         return Mat4.makeTranslation(position).dot(Mat4.makeRotation(theta, new Vec3(0.0, 1.0, 0.0)));
     }
-    public void move(Vec3 vec3) {
-        position = new Vec3(Mat4.makeTranslation(vec3).dot(new Vec4(position)));
+
+    public Vec3 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vec3 position) {
+        this.position = position;
+    }
+
+    public void move(Vec3 vec3, long deltaTime) {
+        velocity = lerp(velocity, vec3, deltaTime);
+        position = new Vec3(Mat4.makeTranslation(velocity).dot(new Vec4(position)));
+    }
+
+    public Vec3 lerp(Vec3 v1, Vec3 v2, long deltaTime) {
+        double d = (double)deltaTime / 300.0;
+        if (d > 1) {
+            d = 1.0;
+        }
+        return new Vec3(
+                Math.abs((1 - d) * v1.x + d * v2.x) < 0.0001 ? 0 : (1 - d) * v1.x + d * v2.x,
+                Math.abs((1 - d) * v1.y + d * v2.y) < 0.0001 ? 0 : (1 - d) * v1.y + d * v2.y,
+                Math.abs((1 - d) * v1.z + d * v2.z) < 0.0001 ? 0 : (1 - d) * v1.z + d * v2.z
+        );
     }
 
 }

@@ -19,7 +19,7 @@ public class Main {
             Player player = new Player(1, 0.1);
             player.setCamera(camera);
             camera.setProject(45 * Math.PI / 180.0, (double)frame.getHeight() / (double)frame.getWidth(), 0.1, 100.0);
-            player.move(new Vec3(0.0, 0.0, 3.1));
+            player.setPosition(new Vec3(0.0, 0.0, 3.1));
             Game game = new Game();
             game.setPlayer(player);
             Toolkit toolkit = Toolkit.getDefaultToolkit();

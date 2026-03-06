@@ -108,6 +108,7 @@ public class Game implements ActionListener {
 
         Vec3 playerFront = player.getFront();
         Vec3 playerMove = new Vec3();
+        Vec3 gravity = new Vec3(0.0, -0.98 / 2, 0.0);
         if (wasdeq[0]) {
             playerMove = playerMove.add(playerFront);
         }
@@ -120,8 +121,30 @@ public class Game implements ActionListener {
         if (wasdeq[3]) {
             playerMove = playerMove.add(new Vec3(0.0, 1.0, 0.0).cross(playerFront).dot(-1));
         }
-        player.move(playerMove.normalize().dot(deltaTime / 30.0 * player.getSpeed()));
+        if (player.getPosition().y <= 0 && wasdeq[4]) {
+            player.getVelocity().y = 1;
+        }
+        if (playerMove.norm() != 0.0) {
+            double y = player.getVelocity().y;
+            Vec3 velocity = playerMove.normalize().dot(deltaTime / 30.0 * player.getSpeed());
+            velocity.y = y;
+            player.setVelocity(velocity);
+        }
+        player.move(playerMove.normalize().dot(deltaTime / 30.0 * player.getSpeed()), deltaTime);
 
+        if (player.getPosition().y > 0) {
+            if (player.getPosition().add(player.lerp(player.getVelocity(), gravity, deltaTime)).y < 0) {
+                gravity.y = 0;
+                player.getPosition().y = 0;
+            }
+        } else {
+            player.getPosition().y = 0;
+            gravity.y = 0;
+        }
+        player.move(gravity, deltaTime);
+        if (player.getPosition().y < 0) {
+            player.getPosition().y = 0;
+        }
 //        Vec3 playerFront = player.getFront();
 //        if (wasdeq[0]) {
 //            player.move(playerFront.dot(deltaTime / 30.0 * player.getSpeed()));
