@@ -137,11 +137,7 @@ public class Game implements ActionListener {
 //        }
 
 
-        renderer.setWidth(renderPanel.getWidth());
-        renderer.setHeight(renderPanel.getHeight());
-        renderer.setViewport(renderPanel.getViewport());
-        renderer.render(this);
-        renderPanel.setColorBuffer(renderer.getColorBuffer());
+        renderPanel.rendering();
         renderPanel.repaint();
     }
 

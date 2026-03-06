@@ -32,12 +32,14 @@ public class RenderPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        setColorBuffer(renderer.getColorBuffer());
+        g.drawImage(bufferedImage, 0, 0, this);
+    }
+    public void rendering() {
         renderer.setWidth(getWidth());
         renderer.setHeight(getHeight());
         renderer.setViewport(getViewport());
         renderer.render(game);
-        setColorBuffer(renderer.getColorBuffer());
-        g.drawImage(bufferedImage, 0, 0, this);
     }
     public void setBufferedImage(BufferedImage bufferedImage) {
         this.bufferedImage = bufferedImage != null ? bufferedImage : this.bufferedImage;
